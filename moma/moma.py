@@ -57,7 +57,7 @@ def load_moma(ctx):
             print(data_file)
             table = data_file.stem
             print(table)
-            sql_statement = f"copy raw.{table} from stdin with csv header delimiter as ';'"
+            sql_statement = f"copy raw.{table} from stdin with csv header delimiter as ','"
             print(sql_statement)
             buffer = io.StringIO()
             with open(data_file,'r') as data:
