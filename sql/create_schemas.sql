@@ -7,5 +7,5 @@ create schema cleaned;
 drop schema if exists semantic cascade;
 create schema semantic;
 
-drop schema if exists raw cascade;
+drop schema if exists features cascade;
 create schema features;
