@@ -2,7 +2,7 @@ create schema if not exists raw;
 
 drop table if exists raw.Artists;
 
-create table raw.Artists (
+CREATE TABLE raw.Artists(
   "ConstituentID" TEXT,
   "DisplayName" TEXT,
   "ArtistBio" TEXT,
@@ -10,16 +10,17 @@ create table raw.Artists (
   "Gender" TEXT,
   "BeginDate" TEXT,
   "EndDate" TEXT,
-  "Wiki_QID" TEXT,
+  "Wiki QID" TEXT,
   "ULAN" TEXT
 );
+
 
 comment on table raw.Artists is 'describes artist characteristics';
 
 
 drop table if exists raw.Artworks;
 
-create table raw.Artworks (
+CREATE TABLE raw.Artworks(
   "Title" TEXT,
   "Artist" TEXT,
   "ConstituentID" TEXT,
@@ -40,15 +41,19 @@ create table raw.Artworks (
   "ObjectID" TEXT,
   "URL" TEXT,
   "ThumbnailURL" TEXT,
-  "Circumference" TEXT,
-  "Depth" TEXT,
-  "Diameter" TEXT,
-  "Height" TEXT, 
-  "Length" TEXT,
-  "Weight" TEXT,
-  "Width" TEXT,
-  "Seat_Height" TEXT,
-  "Duration" TEXT
+  "Circumference (cm)" TEXT,
+  "Depth (cm)" TEXT,
+  "Diameter (cm)" TEXT,
+  "Height (cm)" TEXT,
+  "Length (cm)" TEXT,
+  "Weight (kg)" TEXT,
+  "Width (cm)" TEXT,
+  "Seat Height (cm)" TEXT,
+  "Duration (sec.)" TEXT
 );
 
+
 comment on table raw.Artworks is 'describes artwork characteristics';
+
+
+
