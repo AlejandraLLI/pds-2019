@@ -36,6 +36,9 @@ def moma(ctx):
 def create_schemas(ctx):
     query = ctx.obj['queries'].get('create_schemas')
     print(query)
+    conn = ctx.obj['conn']
+    with conn.cursor() as cur:
+        cur.execute(query)
 
 
 if __name__ == '__main__':
