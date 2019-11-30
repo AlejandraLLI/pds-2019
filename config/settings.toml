@@ -1,0 +1,4 @@
+[default]
+dburl = 'postgresql://service=moma'
+pgconnstring = 'user=moma dbname=moma port=5432 host=0.0.0.0 password=pds_moma'
+berkadir = './data'
