@@ -11,11 +11,11 @@ create table raw.Artists (
   "BeginDate" TEXT,
   "EndDate" TEXT,
   "Wiki_QID" TEXT,
-  "QID" TEXT
+  "QID" TEXT,
   "ULAN" TEXT
 );
 
-comment on table raw.account is 'describes artist characteristics';
+comment on table raw.Artists is 'describes artist characteristics';
 
 
 drop table if exists raw.Artworks;
@@ -54,7 +54,7 @@ create table raw.Artworks (
 );
 
 
-comment on table raw.client is 'describes artwork characteristics';
+comment on table raw.Artworks is 'describes artwork characteristics';
 
 
 
