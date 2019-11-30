@@ -24,7 +24,7 @@ def moma(ctx):
     ctx.obj['conn'] = conn
 
     queries = {}
-    for sql_file in Path('sql').glob('*.sql'):
+    for sql_file in Path('../sql').glob('*.sql'):
         with open(sql_file,'r') as sql:
             sql_key = sql_file.stem
             query = str(sql.read())
