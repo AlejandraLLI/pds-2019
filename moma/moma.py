@@ -40,6 +40,13 @@ def create_schemas(ctx):
     with conn.cursor() as cur:
         cur.execute(query)
 
-
+@moma.command()
+@click.pass_context
+def create_raw_tables(ctx):
+    query = ctx.obj['queries'].get('create_raw_tables')
+    conn = ctx.obj['conn']
+    with conn.cursor() as cur:
+        cur.execute(query)
+                    
 if __name__ == '__main__':
     moma()
