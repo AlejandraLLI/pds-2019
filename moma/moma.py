@@ -63,7 +63,8 @@ def load_moma(ctx):
             with open(data_file,'r') as data:
                 buffer.write(data.read())
             buffer.seek(0)
-            cursor.copy_expert(sql_statement, file=buffer
+            cursor.copy_expert(sql_statement, file=buffer)
+            
 
 if __name__ == '__main__':
     moma()
