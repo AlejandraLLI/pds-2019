@@ -70,10 +70,10 @@ select
 	"Classification"::varchar as classification,
 
 	-- Select variable Department, make it varchar and rename it as deparment.
-	"Department"::varchar as department
+	"Department"::varchar as department,
 
 	-- Select variable DateAcquired, make it a date and rename it as date_acquired. 
-	to_date("DateAcquired",'YYYY-MM-DD') as date_acquired
+	to_date("DateAcquired",'YYYY-MM-DD') as date_acquired,
 
 	-- Select variable Cataloged, make it varchar and rename it as cataloged.
 	"Cataloged"::varchar as cataloged,
