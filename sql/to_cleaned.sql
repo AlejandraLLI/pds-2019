@@ -1,17 +1,20 @@
 -- artists table 
+-- drop the table in the case that it already exists.
+drop table if exists raw.artists;
+
 -- Create the new table "artists" in the cleaned schema
 create table cleaned.artists as(
 
 -- Select and edit variables from table raw.Artists
 select
-	-- Select variable ConstituentID, make it an integer and rename it as constituent. 
-	"ConstituentID"::int as constituent_id,
-	-- Select variable DisplayName, make it varchar and rename it as display_name. 
-	"DisplayName"::varchar as diplay_name,
+	-- Select variable ConstituentID, make it an integer and rename it as atist. 
+	"ConstituentID"::int as artist,
+	-- Select variable DisplayName, make it varchar and rename it as name. 
+	lower("DisplayName")::varchar as name,
 	-- Select variable Nationality, make it varchar and rename it as nationality. 
-	"Nationality"::varchar as nationality,
-	-- Select variable Gender, make it a date and rename it as gender. 
-	"Gender"::varchar as gender,
+	lower("Nationality")::varchar as nationality,
+	-- Select variable Gender, make it a varchar and rename it as gender. 
+	lower("Gender")::varchar as gender,
 	-- Select variable BeginDate, make it a date and rename it as birth_year. 
 	case when "BeginDate"::int = 0
 		then 
@@ -27,14 +30,21 @@ select
 		extract(year from to_date("EndDate", 'YYYY'))
 	end as death_year,
 	-- Select variable "Wiki QID", make it a varchar and rename it as wiki_qid. 
-	"Wiki QID"::varchar as wiki_qid,
+	lower("Wiki QID")::varchar as wiki_qid,
 	-- Select variable ULAN, make it a varchar and rename it as ulan_id. 
-	"ULAN"::varchar as ulan_id
+	"ULAN"::int as ulan
 
 from raw.Artists
 );
 
+comment on table raw.artists is 'describe las características de los artistas';
+
+
+
 -- artworks table 
+-- drop the table in the case that it already exists.
+drop table if exists raw.artworks;
+
 -- Create the new table "artworks" in the cleaned schema
 create table cleaned.artworks as(
 
@@ -95,4 +105,7 @@ select
 
 from raw.Artworks
 );
+
+comment on table raw.artworks is 'describe las características de las obras de arte';
+
 
