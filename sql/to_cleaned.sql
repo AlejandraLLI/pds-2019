@@ -39,7 +39,7 @@ from raw.Artists
 
 comment on table raw.artists is 'describe las características de los artistas';
 
-# Creat indexes
+-- Create indexes
 create index cleaned_artists_artist_ix on cleaned.artists (artist);
 create index cleaned_artists_bith_year_ix on cleaned.artists (bith_year);
 create index cleaned_artists_death_year_ix on cleaned.artists (death_year);
@@ -120,7 +120,7 @@ from raw.Artworks
 
 comment on table raw.artworks is 'describe las características de las obras de arte';
 
-# Creat indexes
+-- Create indexes
 create index cleaned_artworks_artwork_ix on cleaned.artworks (artwork);
 create index cleaned_artworks_artist_array_ix on cleaned.artworks (artist_array);
 create index cleaned_artworks_year_made_ix on cleaned.artworks (year_made);
