@@ -32,7 +32,7 @@ select
 	"ULAN"::varchar as ulan_id
 
 from raw.Artists
-),
+);
 
 -- artworks table 
 -- Create the new table "artworks" in the cleaned schema
