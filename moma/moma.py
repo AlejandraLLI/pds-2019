@@ -3,6 +3,7 @@
 
 import psycopg2
 import psycopg2.extras
+import psycopg2.extensions
 
 import sys
 from datetime import timedelta
@@ -44,6 +45,7 @@ def create_schemas(ctx):
 @click.pass_context
 def create_raw_tables(ctx):
     query = ctx.obj['queries'].get('create_raw_tables')
+    print(query)
     conn = ctx.obj['conn']
     with conn.cursor() as cur:
         cur.execute(query)
@@ -60,11 +62,19 @@ def load_moma(ctx):
             sql_statement = f"copy raw.{table} from stdin with csv header delimiter as ','"
             print(sql_statement)
             buffer = io.StringIO()
-            with open(data_file,'r') as data:
+            with open(data_file,'r', encoding='utf-8') as data:
                 buffer.write(data.read())
             buffer.seek(0)
             cursor.copy_expert(sql_statement, file=buffer)
-            
+
+@moma.command()
+@click.pass_context
+def to_cleaned():
+    query = ctx.obj['queries'].get('to_cleaned')
+    print(query)
+    conn = ctx.obj['conn']
+    with conn.cursor() as cur:
+        cur.execute(query)
 
 if __name__ == '__main__':
     moma()
