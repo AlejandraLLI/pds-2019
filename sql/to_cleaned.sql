@@ -72,8 +72,9 @@ select
 	-- Select variable Department, make it varchar and rename it as deparment.
 	"Department"::varchar as department
 
-	-- MISSING LINES INSERT HERE
-	
+	-- Select variable DateAcquired, make it a date and rename it as date_acquired. 
+	to_date("DateAcquired",'YYYY-MM-DD') as date_acquired
+
 	-- Select variable Cataloged, make it varchar and rename it as cataloged.
 	"Cataloged"::varchar as cataloged,
 
