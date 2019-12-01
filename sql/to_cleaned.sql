@@ -1,6 +1,6 @@
 -- artists table 
 -- drop the table in the case that it already exists.
-drop table if exists raw.artists;
+drop table if exists cleaned.artists;
 
 -- Create the new table "artists" in the cleaned schema
 create table cleaned.artists as(
@@ -46,7 +46,7 @@ create index cleaned_artists_death_year_ix on cleaned.artists (death_year);
 
 -- artworks table 
 -- drop the table in the case that it already exists.
-drop table if exists raw.artworks;
+drop table if exists cleaned.artworks;
 
 -- Create the new table "artworks" in the cleaned schema
 create table cleaned.artworks as(
