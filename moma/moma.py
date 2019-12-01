@@ -69,7 +69,7 @@ def load_moma(ctx):
 
 @moma.command()
 @click.pass_context
-def to_cleaned():
+def to_cleaned(ctx):
     query = ctx.obj['queries'].get('to_cleaned')
     print(query)
     conn = ctx.obj['conn']
