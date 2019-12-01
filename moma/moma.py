@@ -76,5 +76,6 @@ def to_cleaned(ctx):
     with conn.cursor() as cur:
         cur.execute(query)
 
+
 if __name__ == '__main__':
     moma()
