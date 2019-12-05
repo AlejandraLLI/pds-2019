@@ -6,58 +6,53 @@
 # Itzel Zayil Muñoz Fernández de Córdova	122803
 # René Rosado González						137085
 # ---------------------------------------------------------------------------
-# Este script clona el repositorio de github del proyecto y ejecuta los 
-# scripts necesarios para extraer, limpiar y procesar la base de datos moma. 
+# This script executes the necessary steps to extract, clean and process the
+# moma database. 
 # ---------------------------------------------------------------------------
 
-# Ir a la raiz
-cd ~
+# --- Download moma data ---
+# Give execution permission 
+chmod +x ./sh/download_moma_data.sh
 
-# --- Clonar el repositorio del proyecto ---
-git clone https://github.com/AlejandraLLI/pds-2019.git
-
-# Entrar a la carpeta del proyecto y crear subcarpetas
-cd pds-2019
- 
-
-# --- Descargar los datos moma ---
-# Dar permisos de ejecución
-chmod +x ./sh/descarga_datos_moma.sh
-
-# Descargar la base de datos 
-./sh/descarga_datos_moma.sh
+# Download moma database
+./sh/download_moma_data.sh
 
 
-# --- Crear ambiente moma en python ---
-# Dar permisos de ejecución
-chmod +x ./sh/crear_pyenv_moma.sh
+# --- Create the moma environment in python ---
+# Give execution permission 
+chmod +x ./sh/create_pyenv_moma.sh
 
-# Crear el ambiente "moma" de python para la carpeta 
-./sh/crear_pyenv_moma.sh
-
-
-# --- Crear usuario y base de datos postgres---
-# Dar permisos de ejecución
-chmod +x ./sh/crear_usuario_bd_moma.sh
-
-# Crear usuario y base de datos en postgres 
-./sh/crear_usuario_bd_moma.sh
+# Create the moma environment in python for the pds-2019 directory
+./sh/create_pyenv_moma.sh
 
 
-# --- Procesar los datos ---
+# --- Create user and database in postgrers ---
+# Give execution permission 
+chmod +x ./sh/create_user_db_moma.sh
 
-# Entrar a la carpeta moma 
+# Create user and database in postgres
+./sh/create_user_db_moma.sh
+
+
+# --- Process data ---
+
+# Get into moma directory 
 cd moma
 
-# Creamos los esquemas raw, cleaned, semantic y 
-# features desde el archivo moma.py
+# Create raw, cleaned, semantic and features schemas from moma.py file
 python moma.py create-schemas
 
-# Creamos las tablas del esquema raw
+# Create tables for raw schema
 python moma.py create-raw-tables
 
-# Cargamos los datos crudos al esquema raw
+# Load raw data to raw schema
 python moma.py load-moma
 
-# Pasamos los datos al esquema clean
+# Pass raw data to clean schema
 python moma.py to-cleaned
+
+# Pass cleaned data to semantic schema
+python moma.py to-semantic
+
+# Create features
+python moma.py create-features
