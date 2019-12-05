@@ -37,7 +37,7 @@ select
 from raw.Artists
 );
 
-comment on table raw.artists is 'describe las características de los artistas';
+comment on table cleaned.artists is 'describe las caracteristicas de los artistas';
 
 -- Create indexes
 create index cleaned_artists_artist_ix on cleaned.artists (artist);
@@ -118,7 +118,7 @@ select
 from raw.Artworks
 );
 
-comment on table raw.artworks is 'describe las características de las obras de arte';
+comment on table cleaned.artworks is 'describe las caracteristicas de las obras de arte';
 
 -- Create indexes
 create index cleaned_artworks_artwork_ix on cleaned.artworks (artwork);
