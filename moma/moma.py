@@ -1,5 +1,7 @@
-#! /usr/bin/env python
+#! /usr/bin /env python
 # -*- coding: utf-8 -*-
+
+""" A command line interface to manage the moma database"""
 
 import psycopg2
 import psycopg2.extras
@@ -19,6 +21,12 @@ from pathlib import Path
 @click.group()
 @click.pass_context
 def moma(ctx):
+    """  Create the conection to the moma database in postgres using the
+    given default configuration.
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rtype:
+    """ 
     ctx.ensure_object(dict)
     conn = psycopg2.connect(settings.get('PGCONNSTRING'))
     conn.autocommit = True
@@ -32,9 +40,16 @@ def moma(ctx):
             queries[sql_key] = query
     ctx.obj['queries'] = queries
 
+
 @moma.command()
 @click.pass_context
 def create_schemas(ctx):
+    """  Execute the SQL commands to create the schemas raw, cleaned,
+    semantic and features. 
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rtype:
+    """ 
     query = ctx.obj['queries'].get('create_schemas')
     print(query)
     conn = ctx.obj['conn']
@@ -44,15 +59,26 @@ def create_schemas(ctx):
 @moma.command()
 @click.pass_context
 def create_raw_tables(ctx):
+    """  Execute the SQL commands to create tables in the raw schema.
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rty
+    """
     query = ctx.obj['queries'].get('create_raw_tables')
     print(query)
     conn = ctx.obj['conn']
     with conn.cursor() as cur:
         cur.execute(query)
 
+
 @moma.command()
 @click.pass_context
 def load_moma(ctx):
+    """  Execute the SQL commands to load the moma data in the raw schema.
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rty
+    """
     conn = ctx.obj['conn']
     with conn.cursor() as cursor:
         for data_file in Path(settings.get('MOMADIR')).glob('*.csv'):
@@ -67,10 +93,46 @@ def load_moma(ctx):
             buffer.seek(0)
             cursor.copy_expert(sql_statement, file=buffer)
 
+
 @moma.command()
 @click.pass_context
 def to_cleaned(ctx):
+    """  Execute the SQL commands to pass from raw schema to cleaned schema.
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rty
+    """
     query = ctx.obj['queries'].get('to_cleaned')
+    print(query)
+    conn = ctx.obj['conn']
+    with conn.cursor() as cur:
+        cur.execute(query)
+
+
+@moma.command()
+@click.pass_context
+def to_semantic(ctx):
+    """  Execute the SQL commands to pass from cleaned schema to semantic schema.
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rty
+    """
+    query = ctx.obj['queries'].get('to_semantic')
+    print(query)
+    conn = ctx.obj['conn']
+    with conn.cursor() as cur:
+        cur.execute(query)
+
+
+@moma.command()
+@click.pass_context
+def create_features(ctx):
+    """  Execute the SQL commands to create new features. 
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rty
+    """
+    query = ctx.obj['queries'].get('create_features')
     print(query)
     conn = ctx.obj['conn']
     with conn.cursor() as cur:
