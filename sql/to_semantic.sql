@@ -28,7 +28,7 @@ with first_step as (
 		artworks.artwork, artworks.date_acquired as date_init, 
 		count(distinct(artworks.artwork))
  	from ((select * from cleaned.artists) artists
-        	left join semantic.artworks artworks
+        	left join semantic.events_artworks artworks
         	on artists.artist=artworks.artist)
  	group by artists.artist, artists.name, artists.nationality, artists.gender, artists.birth_year,
 		 artists.death_year, artists.wiki_qid, artists.ulan, 
@@ -50,7 +50,7 @@ comment on table semantic.entity_artists is 'describe the characteristics of the
 -- Create indexes
 create index artworks_date_acquired_ix on semantic.events_artworks (date_acquired);
 create index artworks_artwork_ix on semantic.events_artworks (artwork);
-create index artworks_artist_ix on semantic.artworks (artist);
+create index artworks_artist_ix on semantic.event_artworks (artist);
 create index artworks_year_made_ix on cleaned.artworks (year_made);
 create index artists_artist_ix on semantic.entity_artists (artist);
 create index artists_artwork_ix on semantic.entity_artists (artwork);
