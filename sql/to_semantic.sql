@@ -50,8 +50,8 @@ comment on table semantic.entity_artists is 'describe the characteristics of the
 -- Create indexes
 create index artworks_date_acquired_ix on semantic.events_artworks (date_acquired);
 create index artworks_artwork_ix on semantic.events_artworks (artwork);
-create index artworks_artist_ix on semantic.event_artworks (artist);
-create index artworks_year_made_ix on cleaned.artworks (year_made);
+create index artworks_artist_ix on semantic.events_artworks (artist);
+create index artworks_year_made_ix on semantic.events_artworks (year_made);
 create index artists_artist_ix on semantic.entity_artists (artist);
 create index artists_artwork_ix on semantic.entity_artists (artwork);
 create index artists_date_init_ix on semantic.entity_artists (date_init);
