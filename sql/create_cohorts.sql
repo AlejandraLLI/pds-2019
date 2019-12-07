@@ -64,3 +64,13 @@ select *
 from  alived_cohort
 where "entered" is true and alived = 'true'
 );
+
+comment on table cohorts.alive_artists is 'info. of the alive artists whose artworks entered in the moma during a 5 year period';
+
+-- Create indexes
+create index cohorts_alive_artists_artworks_date_acquired_ix on cohorts.alive_artists (date_acquired);
+create index cohorts_alive_artists_artworks_artist_ix on cohorts.alive_artists (artist);
+create index cohorts_alive_artists_artworks_gender_ix on cohorts.alive_artists (gender);
+create index cohorts_alive_artists_artworks_nationality_ix on cohorts.alive_artists (nationality);
+create index cohorts_alive_artists_artworks_birth_year_ix on cohorts.alive_artists (birth_year);
+create index cohorts_alive_artists_artworks_as_of_date_ix on cohorts.alive_artists (as_of_date);
