@@ -35,7 +35,7 @@ with as_of_dates as (
               ) as t2 on true
   )
 
-select *0
+select *
 from  alive_artists
 where "entered" is true 
 );
