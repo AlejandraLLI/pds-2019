@@ -60,8 +60,7 @@ comment on table semantic.entities is 'describe the characteristics of the artis
 
 -- Create indexes
 create index entities_artist_ix on semantic.entities (artist);
-create index entities_artwork_ix on semantic.entities (artwork);
-create index entities_date_acquired_ix on semantic.entities (date_acquired);
+create index entities_birth_year_ix on semantic.entities (birth_year);
 create index entities_nationality_ix on semantic.entities (nationality);
 create index entities_gender_ix on semantic.entities (gender);
 
