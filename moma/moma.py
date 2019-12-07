@@ -97,7 +97,7 @@ def load_moma(ctx):
 @moma.command()
 @click.pass_context
 def to_cleaned(ctx):
-    """  Execute the SQL commands to pass from raw schema to cleaned schema.
+    """  Execute the SQL commands to pass tables from raw schema to cleaned schema.
     :param module ctx: subclass of the dict object.
     :return: 
     :rty
@@ -112,7 +112,7 @@ def to_cleaned(ctx):
 @moma.command()
 @click.pass_context
 def to_semantic(ctx):
-    """  Execute the SQL commands to pass from cleaned schema to semantic schema.
+    """  Execute the SQL commands to pass tables from cleaned schema to semantic schema.
     :param module ctx: subclass of the dict object.
     :return: 
     :rty
@@ -126,8 +126,38 @@ def to_semantic(ctx):
 
 @moma.command()
 @click.pass_context
+def create_cohorts(ctx):
+    """  Execute the SQL commands to create the cohort tables from tables in the semantic schema.
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rty
+    """
+    query = ctx.obj['queries'].get('create_cohorts')
+    print(query)
+    conn = ctx.obj['conn']
+    with conn.cursor() as cur:
+        cur.execute(query)
+
+
+@moma.command()
+@click.pass_context
+def create_labels(ctx):
+    """  Execute the SQL commands to create tables in the labels schema.
+    :param module ctx: subclass of the dict object.
+    :return: 
+    :rty
+    """
+    query = ctx.obj['queries'].get('create_labels')
+    print(query)
+    conn = ctx.obj['conn']
+    with conn.cursor() as cur:
+        cur.execute(query)
+
+
+@moma.command()
+@click.pass_context
 def create_features(ctx):
-    """  Execute the SQL commands to create new features. 
+    """  Execute the SQL commands to create tables of new features. 
     :param module ctx: subclass of the dict object.
     :return: 
     :rty
