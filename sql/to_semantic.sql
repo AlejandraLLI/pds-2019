@@ -52,15 +52,8 @@ drop table if exists semantic.entities;
 -- Create the new table "entities" in the semantic schema
 create table semantic.entities as(
 -- Select and join variables from table cleaned.artists and semantic.events_artworks_in
-select artists.artist, artists.name, artists.nationality, artists.gender, artists.birth_year, 
-	artists.wiki_qid, artists.ulan, artworks.artwork, artworks.date_acquired 
-from(
- 	(select * from cleaned.artists) artists
- 	 left join semantic.events_artworks_in artworks
-     on artists.artist=artworks.artist)
-group by artists.artist, artists.name, artists.nationality, artists.gender, artists.birth_year,
-		artists.death_year, artists.wiki_qid, artists.ulan, 
-		artworks.artwork, artworks.date_acquired
+select artist, name, nationality, gender, birth_year, wiki_qid, ulan
+from cleaned.artists
 );
 
 comment on table semantic.entities is 'describe the characteristics of the artists as entities';
