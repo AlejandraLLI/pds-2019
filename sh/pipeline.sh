@@ -54,5 +54,11 @@ python moma.py to-cleaned
 # Pass cleaned data to semantic schema
 python moma.py to-semantic
 
-# Create features
+# Create tables for the cohort schema 
+python moma.py create-cohorts
+
+# Create tables for the labels schema
+python moma.py create-labels
+
+# Create tables for the features schema
 python moma.py create-features
