@@ -39,7 +39,7 @@ from cleaned.artists
 comment on table semantic.events_artists_deaths is 'describes the event: an artist dies';
 
 -- Create indexes
-create index events_artists_deaths_artist_ix on semantic.events_artists_deaths (atist);
+create index events_artists_deaths_artist_ix on semantic.events_artists_deaths (artist);
 create index events_artists_deaths_death_year_ix on semantic.events_artists_deaths (death_year);
 
 
@@ -51,7 +51,7 @@ drop table if exists semantic.entities;
 
 -- Create the new table "entities" in the semantic schema
 create table semantic.entities as(
--- Select and join variables from table cleaned.artists and semantic.events_artworks
+-- Select and join variables from table cleaned.artists and semantic.events_artworks_in
 select artists.artist, artists.name, artists.nationality, artists.gender, artists.birth_year, 
 	artists.wiki_qid, artists.ulan, artworks.artwork, artworks.date_acquired 
 from(
@@ -63,15 +63,14 @@ group by artists.artist, artists.name, artists.nationality, artists.gender, arti
 		artworks.artwork, artworks.date_acquired
 );
 
-comment on table semantic.entity_artists is 'describe the characteristics of the artists as entities';
+comment on table semantic.entities is 'describe the characteristics of the artists as entities';
 
 -- Create indexes
-create index entities_artist_ix on semantic.entity_artists (artist);
-create index entities_artwork_ix on semantic.entity_artists (artwork);
-create index entities_date_init_ix on semantic.entity_artists (date_init);
-create index entities_date_end_ix on semantic.entity_artists (date_end);
-create index entities_status_ix on semantic.entity_artists (status);
-
+create index entities_artist_ix on semantic.entities (artist);
+create index entities_artwork_ix on semantic.entities (artwork);
+create index entities_date_acquired_ix on semantic.entities (date_acquired);
+create index entities_nationality_ix on semantic.entities (nationality);
+create index entities_gender_ix on semantic.entities (gender);
 
 
 
