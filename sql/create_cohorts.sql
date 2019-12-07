@@ -9,8 +9,15 @@ with as_of_dates as (
   -- Generate the as_of_date every 5 years. 
   select
     generate_series(min(date_acquired), max(date_acquired), '5 years') as as_of_date
-    from
-        semantic.events_artworks_in
+  from semantic.events_artworks_in
+),
+
+entities_artworks as (
+  select entities.*,artworks.artwork, artworks.date_acquired
+  from semantic.entities entities
+  left join semantic.events_artworks_in artworks
+  on entities.artist=artworks.artist
+
 ),
 -- For each period in the as_of_date, select artists that entered an artwork  
 -- with their corresponding characteristics. 
@@ -31,11 +38,10 @@ artists_cohort as (
     ) as aod
     -- Join observations row by row with entities table from semantic schema
     left join lateral (
-      select *, age(date_acquired,as_of_date)
-      from semantic.entities
+      select *, age(date_acquired, as_of_date)
+      from entities_artworks
     ) as t2 on true
   ),
-
 -- For each observation in the cohort, add data from the event "death artist" and create 
 -- the boolean "alived"  
 alived_cohort as (
