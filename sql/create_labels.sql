@@ -1,4 +1,4 @@
-drop table if exists labels.entered_artworks in;
+drop table if exists labels.entered_artworks_1y;
 create table if not exists labels.entered_artworks_1y as (
 
 with outcomes as (
