@@ -7,7 +7,7 @@ create schema cleaned;
 drop schema if exists semantic cascade;
 create schema semantic;
 
-drop shcema if exists cohorts cascade;
+drop schema if exists cohorts cascade;
 create schema cohorts;
 
 drop schema if exists labels cascade;
