@@ -13,7 +13,7 @@ select artwork, date_acquired, title, unnest(artist_array)::int as artist, year_
 from cleaned.artworks
 );
 
-comment on table semantic.events_artworks is 'describe the static characteristics of the artworks as events';
+comment on table semantic.events_artworks_in is 'describe the static characteristics of the artworks as events';
 
 -- Create indexes
 create index events_artworks_in_date_acquired_ix on semantic.events_artworks_in (date_acquired);
