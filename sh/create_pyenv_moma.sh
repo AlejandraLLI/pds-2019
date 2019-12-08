@@ -6,20 +6,20 @@
 # Itzel Zayil Muñoz Fernández de Córdova	122803
 # René Rosado González						137085
 # ---------------------------------------------------------------------------
-# Este script crea el ambiente virtual "moma" necesario para el proyecto
+# This script creates the vitual environment "moma" needed for the project
 # ---------------------------------------------------------------------------
 
-# Crea ambiente vitual moma
+# Create moma virtual environment
 pyenv virtualenv 3.7.3 moma
 
-# Ligarlo a la carpeta del proyecto
+# Link the moma environt to the pds-2019 directory
 echo "moma" > .python-version
 
-# Instalar poetry
+# Install poetry
 pip install poetry 
 
-# Instalar las dependencias que vienen en el archivo pyproject.toml
+# Install all dependencies in the pyproject.toml file
 poetry install
 
-# Imprimir mensaje 
-echo "Se creó el ambiente virtual moma y se instalaron las librerías de python necesarias."
+# Print message for user
+echo "\n\nThe moma virtual envionment was created. All needed libraries were installed."
