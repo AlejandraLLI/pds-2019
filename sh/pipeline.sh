@@ -35,30 +35,8 @@ chmod +x ./sh/create_user_db_moma.sh
 
 
 # --- Process data ---
+# Give execution permission 
+chmod +x ./sh/process_data.sh
 
-# Get into moma directory 
-cd moma
-
-# Create raw, cleaned, semantic and features schemas from moma.py file
-python moma.py create-schemas
-
-# Create tables for raw schema
-python moma.py create-raw-tables
-
-# Load raw data to raw schema
-python moma.py load-moma
-
-# Pass raw data to clean schema
-python moma.py to-cleaned
-
-# Pass cleaned data to semantic schema
-python moma.py to-semantic
-
-# Create tables for the cohort schema 
-python moma.py create-cohorts
-
-# Create tables for the labels schema
-python moma.py create-labels
-
-# Create tables for the features schema
-python moma.py create-features
+# Create user and database in postgres
+./sh/process_data.sh
