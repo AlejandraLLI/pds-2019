@@ -18,14 +18,6 @@ chmod +x ./sh/download_moma_data.sh
 ./sh/download_moma_data.sh
 
 
-# --- Create the moma environment in python ---
-# Give execution permission 
-chmod +x ./sh/create_pyenv_moma.sh
-
-# Create the moma environment in python for the pds-2019 directory
-./sh/create_pyenv_moma.sh
-
-
 # --- Create user and database in postgrers ---
 # Give execution permission 
 chmod +x ./sh/create_user_db_moma.sh
