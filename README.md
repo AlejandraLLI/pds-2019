@@ -27,7 +27,6 @@ This project's workflow covers from the creation of a virtual environment to the
 The sh directory in the repo, contains **.sh** files that execute the complete workflow as follows:
 
   - Downloading MoMA files -- *download_moma_data.sh*
-  - Creating the virtual environment and installing python packages -- *create_pyenv_moma.sh*
   - Creating PostgreSQL user and database -- *create_user_db_moma.sh*
   - Process the database -- *process_data.sh* through:
       - creating schemas,
@@ -38,7 +37,7 @@ The sh directory in the repo, contains **.sh** files that execute the complete w
       - creating the cohorts and labels
       - creating the features
 
-All these .sh files are executed with the pipeline.sh file. Therefore, to execute the complete workflow and be able to reproduce our project, you need to follow these steps:
+After creating the **moma** python envionment, all the .sh files can be executed with the pipeline.sh file. Therefore, to execute the complete workflow and be able to reproduce our project, you need to follow these steps:
 
 1. Set up a **NEW** virtual machine using vagrant.
 2. Change to root directory:
@@ -49,15 +48,67 @@ cd ~
 ```text
 git clone https://github.com/AlejandraLLI/pds-2019.git
 ```
- 4. Change to the repo directory:
+4. Create the moma environment: 
+ ```text
+pyenv virtualenv 3.7.3 moma
+ ```
+5. Change to the repo directory:
 ```text
 cd pds-2019
 ```
- 5. Give execution permission to the pipeline.sh file:
+6. Assign the moma environment to the pds-2019 directory 
+```text
+echo moma > .python-version
+```
+7. Install poetry 
+```text
+pip install poetry
+```
+8. Install dependencies from the pyproject.toml file. 
+```text
+poetry install
+```
+Note: During the development of this project we experimented some problems installing the python packages with poetry install. After the previous step, please check that packages were properly installed verifying the available modules in the moma.py. To do this, please run the following: 
+```text
+cd moma
+pytho moma.py
+```
+The output should look like this: 
+```text 
+Usage: moma.py [OPTIONS] COMMAND [ARGS]...
+
+  Create the connection to the moma database in postgres using the given
+  default configuration. :param module ctx: subclass of the dict object.
+  :return:  :rtype:
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  create-cohorts     Execute the SQL commands to create the cohort tables...
+  create-features    Execute the SQL commands to create tables of new...
+  create-labels      Execute the SQL commands to create tables in the
+                     labels...
+  create-raw-tables  Execute the SQL commands to create tables in the raw...
+  create-schemas     Execute the SQL commands to create the schemas raw,...
+  load-moma          Execute the SQL commands to load the moma data in the...
+  to-cleaned         Execute the SQL commands to pass tables from raw
+                     schema...
+  to-semantic        Execute the SQL commands to pass tables from cleaned...
+``
+
+. Give execution permission to the pipeline.sh file:
 ```text
 chmod +x ./sh/pipeline.sh
 ```
-6. Execute pipeline.sh file:
+If the output is not like the previously showed or if you get an error message please try again with the command ***poetry install*** until it's properly installed in the vm. 
+
+9. Go back to pds-2019
+```text
+cd ..
+```
+
+10. Execute the pipeline.sh file:
 ```text
 ./sh/pipeline.sh
 ```
@@ -70,8 +121,17 @@ The default name of the database is ***"moma"*** and the default user is ***"mom
 
 In the further sections, we describe all details in each step of the workflow previously described, and show how postgreSQL queries should look like. 
 
+
 ##### Python project structure
 Our repo contains the recommended directory structure for Python projects. Most of the directories contain a en empty file named *fake_file.txt* in order for git to be able to track those directories, please ignore them. 
+
+
+##### Creating the virtual environment and installing the python packages
+
+We created a virtual environment in Python named "moma" for the project. This environment contains the following packages: 
+*click*, *dynaconf*, *psycopg2*, *flake8*, *black*, *mypy*, *sphinx* among others. All this info is contained in the *pypoject.toml* file and are installed through poetry. 
+
+This step of the workflow can be run with steps 4-8 of the instructions above. 
 
 ##### Downloading MoMa
 > The database includes basic meta-data for each work, including title, artist, date made, medium, dimensions, and date acquired by the Museum. Some of these records have incomplete information and are noted as “not Curator Approved.”  ([MoMa])
@@ -126,12 +186,7 @@ For practicality we use the csv files in the project which and have the followin
  
 This step of the workflow can be run independently with the *download_moma_data.sh* file in the *sh* directory. 
 
-##### Creating the virtual environment and installing the python packages
 
-We create a virtual environment in Python named "moma" for the project. This environment contains the following packages: 
-*click*, *dynaconf*, *psycopg2*, *flake8*, *black*, *mypy*, *sphinx* among others. All this info is contained in the *pypoject.toml* file and are installed through poetry. 
-
-This step of the workflow can be run independently with the *create_pyenv_moma.sh* file in the *sh* directory. 
 
 ##### Creating PostgreSQL user and database
 
