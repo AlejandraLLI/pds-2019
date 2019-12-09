@@ -71,7 +71,7 @@ poetry install
 Note: During the development of this project we experimented some problems installing the python packages with poetry install. After the previous step, please check that packages were properly installed verifying the available modules in the moma.py. To do this, please run the following: 
 ```text
 cd moma
-pytho moma.py
+python moma.py
 ```
 The output should look like this: 
 ```text 
@@ -95,11 +95,6 @@ Commands:
   to-cleaned         Execute the SQL commands to pass tables from raw
                      schema...
   to-semantic        Execute the SQL commands to pass tables from cleaned...
-``
-
-. Give execution permission to the pipeline.sh file:
-```text
-chmod +x ./sh/pipeline.sh
 ```
 If the output is not like the previously showed or if you get an error message please try again with the command ***poetry install*** until it's properly installed in the vm. 
 
@@ -108,7 +103,11 @@ If the output is not like the previously showed or if you get an error message p
 cd ..
 ```
 
-10. Execute the pipeline.sh file:
+10. Give execution permission to the pipeline.sh file: 
+```text
+chmod +x ./sh/pipeline.sh
+```
+11. Execute the pipeline.sh file:
 ```text
 ./sh/pipeline.sh
 ```
