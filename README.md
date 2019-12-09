@@ -18,7 +18,7 @@ This project uses The Museum of Modern Art ([MoMA]) research dataset
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3524700.svg)](https://doi.org/10.5281/zenodo.3524700) in order to put into practice the knowledge acquired in the *Programming for Data Science* class. The following sections will discuss each step in the workflow and how to execute the code. 
 > This research dataset contains 138,124 records, representing all of the works that have been accessioned into MoMA’s collection and cataloged in our database. 
 
-Given the nature of the data, **we aim to predict if an alive artist will entered an artwork during the next year**. This ML problem will be assessed using bash, SQL and Python to download, clean and process the [Moma] database. It is worth mentioning that the scope of the project does not include the estimation of the ML algorithms to solve the above mentioned problem and will only cover up to the creation of features. The following sections will explain in more detail each step of the workflow and our lines of thought.
+Given the nature of the data, **we aim to predict if an alive artist will entered an artwork during the next year**. This ML problem will be assessed using bash, SQL and Python to download, clean and process the [MoMA] database. It is worth mentioning that the scope of the project does not include the estimation of the ML algorithms to solve the above mentioned problem and will only cover up to the creation of features. The following sections will explain in more detail each step of the workflow and our lines of thought.
 
 #### Workflow
 
@@ -29,13 +29,13 @@ The sh directory in the repo, contains **.sh** files that execute the complete w
   - Downloading MoMA files -- *download_moma_data.sh*
   - Creating the virtual environment and installing python packages -- *create_pyenv_moma.sh*
   - Creating PostgreSQL user and database -- *create_user_db_moma.sh*
-  - Process the database -- *process_data.sh* though:
+  - Process the database -- *process_data.sh* through:
       - creating schemas,
       - creating raw tables,
       - loading data, 
       - cleaning the database, 
       - creating the semantic schema (with entities and events),
-      - creating the cohortS and labels
+      - creating the cohorts and labels
       - creating the features
 
 All these .sh files are executed with the pipeline.sh file. Therefore, to execute the complete workflow and be able to reproduce our project, you need to follow these steps:
@@ -78,7 +78,7 @@ Our repo contains the recommended directory structure for Python projects. Most 
 
 The database has two tables that are available in both csv and json files. Figure \ref{entity_rel_diagram} shows the entity-relation diagram for this tables. 
 
-![MoMA database diagram\label{entity_rel_diagram}](.docs/Entity_Relation_Diagram.png)
+![MoMA database diagram\label{entity_rel_diagram}](docs/Entity_Relation_Diagram.png)
 
 For practicality we use the csv files in the project which and have the following columns:
 
@@ -129,7 +129,7 @@ This step of the workflow can be run independently with the *download_moma_data.
 ##### Creating the virtual environment and installing the python packages
 
 We create a virtual environment in Python named "moma" for the project. This environment contains the following packages: 
-*click*, *dynaconf*, *psycopg2*, *flake8*, *black*, *mypy*, *sphinx* among others. All this info. is contained in the *pypoject.toml* file and are installed through poetry. 
+*click*, *dynaconf*, *psycopg2*, *flake8*, *black*, *mypy*, *sphinx* among others. All this info is contained in the *pypoject.toml* file and are installed through poetry. 
 
 This step of the workflow can be run independently with the *create_pyenv_moma.sh* file in the *sh* directory. 
 
@@ -177,7 +177,7 @@ This step of the workflow can be run independently with the *create_user_db_moma
 
 ##### Processing the data 
 
-To process data, we automatized the sql queries through the *moma.py* file. This file has 8 modules that help to create the different schemas and tables in PostgreSQL. This modules are: 
+To process data, we automatized the sql queries through the *moma.py* file. This file has 8 modules that help to create the different schemas and tables in PostgreSQL. These modules are: 
 1. create-schemas
 2. create-raw-tables
 3. load-moma
@@ -197,9 +197,9 @@ With the module ***create-schemas*** contained in the *moma.py* file, we create 
 3. *semantic*: transform data into entities and events. 
 4. *cohort*: define the as_of_date and entities available in the corresponding periods.
 5. *labels*: create labels for the observations in the corresponding periods. 
-6. *features*: create new features for derived from entities and create features from the different type of aggregations of the characteristics of the events. 
+6. *features*: create new features derived from entities and create features from the different type of aggregations of the characteristics of the events. 
 
-You can verify the schemas created din the database with:
+You can verify the schemas created in the database with:
 ```text
 \dn
 ```
@@ -235,7 +235,8 @@ And the output should be similar to:
  raw    │ artworks │ table │ moma
 (2 rows)
 ```
-To get a more detailed description of the tables you can use: ```text
+To get a more detailed description of the tables you can use: 
+```text
 \d raw.Artists
 ```
 with the following output
@@ -252,6 +253,7 @@ with the following output
  EndDate       │ text │           │          │ 
  Wiki QID      │ text │           │          │ 
  ULAN          │ text │           │          │ 
+  ````
  and 
  
  ```text
@@ -373,7 +375,7 @@ For the raw.Artworks table we:
 - Dropped columns with duplicate information in table cleaned.artists, such as *Artistbio*, *Nationality*, *Artist* (name), *BeginDate*, *EndDate*, *Gender*, *Dimensions* (repeated in with and height). 
 - Renamed columns to make more sens. 
 - Assign the correct type of variable for each column.
-- Convert strings to lower case for varchars to unify. For example in gender we found "Male" and "male" which are the same value. 
+- Convert strings to lower case for varchars to unify. 
 
 The cleaned data was stored in the cleaned.artworks table. The following command prints the description of the table.
 ```text
@@ -421,7 +423,7 @@ The output is not shown here because is too wide.
 ##### To Semantic
 As mentioned earlier, we want to predict if an alive artist will enter an artwork during the following year. To do this, and given the nature of the data, we define the artist as our entity and each entity can have two types of associated events: i) the artist entered an artwork to the MoMA, or ii) the artist dies. 
 
-The static characteristics of the entity (artist) are saved in the *semantic.entities* table. We assume that an artist can't change either its gender nor its nationality, such that this are static characteristics. To check the structure of this table, use the following command:
+The static characteristics of the entity (artist) are saved in the *semantic.entities* table. We assume that an artist can't change either its gender nor its nationality, such that these are static characteristics. To check the structure of this table, use the following command:
 ```text
 \d semantic.entities
 ```
@@ -460,7 +462,7 @@ which should have an output like
 ````
 
 
-For the events, we will use two separate tables: 
+For the events, we will use two separated tables: 
 1. *events_artworks_in*: contains the artworks that have entered the Moma and its static characteristics such as dimensions, title, artist(s), department, etc... An important thing to notice here is that, since one artwork could have more than one artist associated and this was stored in an arrray in the raw and cleaned schemas, the events_artworks_in table unnests this information such that each row corresponds to one artwork and one artist. This is, some artworks will appear in more than one observation. The structure of the table is as follows:
 ```text
  \d semantic.events_artworks_in
@@ -495,7 +497,13 @@ Indexes:
     "events_artworks_in_date_acquired_ix" btree (date_acquired)
     "events_artworks_in_year_made_ix" btree (year_made)
 ```
-2. *events_artists_deaths*: contains the artist and it year of death (if applies). The structure of the table is as follows:
+To view some observations use
+```text
+select * from semantic.events_artworks_in limit 5;
+```
+The output is not shown here because is too wide. 
+
+2. *events_artists_deaths*: contains the artist and his/her year of death (if applies). The structure of the table is as follows:
 ```text
 \d semantic.events_artists_deaths
              Table "semantic.events_artists_deaths"
@@ -507,11 +515,223 @@ Indexes:
     "events_artists_deaths_artist_ix" btree (artist)
     "events_artists_deaths_death_year_ix" btree (death_year)
 ```
+To view some observations use
+```text
+select * from semantic.events_artists_deaths limit 5;
+```
+which should have an output like
+
+```text
+ artist │ death_year 
+════════╪════════════
+      1 │       1992
+      2 │         ¤
+      3 │         ¤
+      4 │         ¤
+      5 │         ¤
+(5 rows)
+```
+ 
 
 An advantage of the defined structure is that it could also allow us to investigate on the number of artworks each artists has in MoMA through the sample period, and how fast or slow this number increases according to artist's gender, age, nationality, etc..
 
 ##### Create Cohorts
+We continue with the creation of the cohorts, this is, the entities on which we want to predict. Our group of interest as defined previously are the alive artists that enter artworks in MoMA's collection. In this step, we also need to define how often we want to make the prediction with the ML algorithm, we define the periodicity as 5 years; we also define the period each date will consider to count the acquisition of the artworks, we define it as 10 years. So se build the *as_of_date* variable with these definitions: alive artist every 5 years that entered artworks in MoMA's collection in the last 10 years. 
+
+The structure of this table is:
+```text
+\d cohorts.alive_artists 
+                   Table "cohorts.alive_artists"
+    Column     │       Type        │ Collation │ Nullable │ Default 
+═══════════════╪═══════════════════╪═══════════╪══════════╪═════════
+ date_acquired │ date              │           │          │ 
+ artist        │ integer           │           │          │ 
+ name          │ character varying │           │          │ 
+ gender        │ character varying │           │          │ 
+ nationality   │ character varying │           │          │ 
+ birth_year    │ double precision  │           │          │ 
+ artwork       │ integer           │           │          │ 
+ wiki_qid      │ character varying │           │          │ 
+ ulan          │ integer           │           │          │ 
+ as_of_date    │ date              │           │          │ 
+ entered       │ boolean           │           │          │ 
+ alived        │ boolean           │           │          │ 
+Indexes:
+    "cohorts_alive_artists_artworks_artist_ix" btree (artist)
+    "cohorts_alive_artists_artworks_as_of_date_ix" btree (as_of_date)
+    "cohorts_alive_artists_artworks_birth_year_ix" btree (birth_year)
+    "cohorts_alive_artists_artworks_date_acquired_ix" btree (date_acquired)
+    "cohorts_alive_artists_artworks_gender_ix" btree (gender)
+    "cohorts_alive_artists_artworks_nationality_ix" btree (nationality)
+```
+To view some observations write:
+```text
+select * from cohorts.alive_artists limit 5;
+```
+with an output like this
+
+```text
+ date_acquired │ artist │      name      │ gender │ nationality │ birth_year │ artwork │ wiki_qid │ ulan │ as_of_date │ entered │ alived 
+═══════════════╪════════╪════════════════╪════════╪═════════════╪════════════╪═════════╪══════════╪══════╪════════════╪═════════╪════════
+ 1981-04-28    │      1 │ robert arneson │ male   │ american    │       1930 │   33599 │ ¤       │   ¤ │ 1984-11-19 │ t       │ t
+ 1981-04-28    │      1 │ robert arneson │ male   │ american    │       1930 │   33599 │ ¤       │   ¤ │ 1989-11-19 │ t       │ t
+ 1965-03-09    │      2 │ doroteo arnaiz │ male   │ spanish     │       1936 │   61629 │ ¤       │   ¤ │ 1969-11-19 │ t       │ t
+ 1965-03-09    │      2 │ doroteo arnaiz │ male   │ spanish     │       1936 │   61629 │ ¤       │   ¤ │ 1974-11-19 │ t       │ t
+ 1981-10-15    │      3 │ bill arnold    │ male   │ american    │       1941 │   51005 │ ¤       │   ¤ │ 1984-11-19 │ t       │ t
+(5 rows)
+```
 
 ##### Create Labels
 
+The next step consists of creating the labels that will help us to make the future predictions. Since our cohorts table in each as_of_date value has every artist that entered an artwork in the last 10 years, we use it to create the labels table. So in the labels table we have all the artists that entered an artwork in MoMA in the last 10 years for each as_of_date.
+
+The structure of labels table is:
+
+```text
+\d labels.entered_artworks_1y
+```
+```text
+          Table "labels.entered_artworks_1y"
+   Column   │  Type   │ Collation │ Nullable │ Default 
+════════════╪═════════╪═══════════╪══════════╪═════════
+ as_of_date │ date    │           │          │ 
+ artist     │ integer │           │          │ 
+ label      │ integer │           │          │ 
+Indexes:
+    "labels_entered_artworks_1y_artist_as_of_date_ix" btree (artist, as_of_date)
+    "labels_entered_artworks_1y_artist_ix" btree (artist)
+    "labels_entered_artworks_1y_as_of_date_ix" btree (as_of_date)
+```
+To view some observations:
+```text
+select * from labels.entered_artworks_1y limit 5;
+```
+with output like
+```text
+ as_of_date │ artist │ label 
+════════════╪════════╪═══════
+ 1979-11-19 │   6351 │     1
+ 1979-11-19 │    215 │     1
+ 1944-11-19 │   3468 │     1
+ 1944-11-19 │   1140 │     1
+ 1994-11-19 │   4676 │     1
+(5 rows)
+```
+
 ##### Create Features
+
+Once we have cohorts and labels tables, we create different features that will be useful to make our prediction "if an alive artist will entered an artwork during the next year". Features can be separated in two different types depending on where they come from:
+
+###### Entity derived features 
+
+These features as the name says, depend only from the entity and not from the events. In our entity definition, the artist has characteristics that are static against our definition of events. We create the following entity derived features:
++ age -- artist birth year is static, so for each cohort we calculate artist age
++ gender -- as mentioned before, we assume that gender is static, we keep this characteristic as a feature
++ nationality -- like gender and mentioned before, we assume this characteristic is static so we keep it as a feature
+
+The aggregated features table has this structure:
+```text
+\d features.entity_derived 
+                 Table "features.entity_derived"
+   Column    │       Type        │ Collation │ Nullable │ Default 
+═════════════╪═══════════════════╪═══════════╪══════════╪═════════
+ as_of_date  │ date              │           │          │ 
+ artist      │ integer           │           │          │ 
+ nationality │ character varying │           │          │ 
+ gender      │ character varying │           │          │ 
+ age         │ double precision  │           │          │ 
+Indexes:
+    "features_entity_derived_artist_as_of_date_ix" btree (artist, as_of_date)
+    "features_entity_derived_artist_ix" btree (artist)
+    "features_entity_derived_as_of_date_ix" btree (as_of_date)
+```
+
+To view some observations:
+```text
+select * from features.entity_derived limit 5;
+```
+with output like
+```text
+ as_of_date │ artist │ nationality │ gender │ age 
+════════════╪════════╪═════════════╪════════╪═════
+ 1979-11-19 │   6351 │ american    │ male   │  40
+ 1979-11-19 │    215 │ japanese    │ male   │  ¤
+ 1944-11-19 │   3468 │ american    │ male   │  26
+ 1944-11-19 │   1140 │ american    │ female │  33
+ 1994-11-19 │   4676 │ italian     │ male   │  68
+(5 rows)
+```
+
+###### Aggregated features 
+
+These features depend on the events that happen to the entity, for example, when an artist's artwork is acquired by MoMA, the number of artworks he/she has in MoMA increases. Because events happen across time, this features are aggregated through time (as the name says). We created various aggregated features:
++ total_artworks_1y -- artist artworks acquired by MoMA in the last year (between as_of_date -1year to as_of_date)
++ total_artworks_2y -- artist artworks acquired by MoMA in the last 2 years
++ total_artworks_3y -- artist artworks acquired by MoMA in the last 3 years
++ total_artworks_4y -- artist artworks acquired by MoMA in the last 4 years
++ total_artworks_5y -- artist artworks acquired by MoMA in the last 5 years
++ total_artworks_acum -- accumulated artist artworks acquired by MoMA (from November 1929 to as_of_date)
++ min_dimension, mean_dimension, max_dimension -- for each artwork dimension (circumference, depth, diameter, heigth, length, weight, width, seat height, duration) minumum, mean and maximum of artist accumulated artworks acquired by MoMA
++ mean_artwork_age -- mean artist accumulated artworks' age acquired by MoMA
+ 
+It's important to mention that since we are interested in artworks from alive artists, this features were built with this consideration. For example, if an artist died in 1985, and MoMA acquired some of her artworks in 1980 and others in 1986, if we stand in as_of_date 1989 we count all artworks entered from 1979 to 1989 but only when she was alive, so we won't count the artworks MoMA acquired from her in 1986.
+
+The structure of aggregated features is:
+```text
+\d features.aggregated 
+                        Table "features.aggregated"
+        Column         │       Type       │ Collation │ Nullable │ Default 
+═══════════════════════╪══════════════════╪═══════════╪══════════╪═════════
+ as_of_date            │ date             │           │          │ 
+ artist                │ integer          │           │          │ 
+ total_artworks_1y     │ bigint           │           │          │ 
+ total_artworks_2y     │ bigint           │           │          │ 
+ total_artworks_3y     │ bigint           │           │          │ 
+ total_artworks_4y     │ bigint           │           │          │ 
+ total_artworks_5y     │ bigint           │           │          │ 
+ total_artworks_acum   │ bigint           │           │          │ 
+ min_circumference_cm  │ numeric          │           │          │ 
+ mean_circumference_cm │ numeric          │           │          │ 
+ max_circumference_cm  │ numeric          │           │          │ 
+ min_depth_cm          │ numeric          │           │          │ 
+ mean_depth_cm         │ numeric          │           │          │ 
+ max_depth_cm          │ numeric          │           │          │ 
+ min_diameter_cm       │ numeric          │           │          │ 
+ mean_diameter_cm      │ numeric          │           │          │ 
+ max_diameter_cm       │ numeric          │           │          │ 
+ min_heigth_cm         │ numeric          │           │          │ 
+ mean_heigth_cm        │ numeric          │           │          │ 
+ max_heigth_cm         │ numeric          │           │          │ 
+ min_length_cm         │ numeric          │           │          │ 
+ mean_length_cm        │ numeric          │           │          │ 
+ max_length_cm         │ numeric          │           │          │ 
+ min_weight_kg         │ numeric          │           │          │ 
+ mean_weight_kg        │ numeric          │           │          │ 
+ max_weight_kg         │ numeric          │           │          │ 
+ min_width_cm          │ numeric          │           │          │ 
+ mean_width_cm         │ numeric          │           │          │ 
+ max_width_cm          │ numeric          │           │          │ 
+ min_seat_height_cm    │ numeric          │           │          │ 
+ mean_seat_height_cm   │ numeric          │           │          │ 
+ max_seat_height_cm    │ numeric          │           │          │ 
+ min_duration_sec      │ numeric          │           │          │ 
+ mean_duration_sec     │ numeric          │           │          │ 
+ max_duration_sec      │ numeric          │           │          │ 
+ mean_artwork_age      │ double precision │           │          │ 
+Indexes:
+    "features_aggregated_artist_as_of_date_ix" btree (artist, as_of_date)
+    "features_aggregated_artist_ix" btree (artist)
+    "features_aggregated_as_of_date_ix" btree (as_of_date)
+```
+
+To view some observations of the table
+```text
+select * from features.aggregated limit 5;
+```
+this output is too wide so we don't show it.
+
+
+
+
+
+
