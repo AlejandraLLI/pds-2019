@@ -16,7 +16,7 @@ This project provides a structured workflow for loading and analyzing the The Mu
 
 This project uses The Museum of Modern Art ([MoMA]) research dataset 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3524700.svg)](https://doi.org/10.5281/zenodo.3524700) in order to put into practice the knowledge acquired in the *Programming for Data Science* class. The following sections will discuss each step in the workflow and how to execute the code. 
-> This research dataset contains 138,124 records, representing all of the works that have been accessioned into MoMA’s collection and cataloged in our database. 
+> This research dataset contains 138,124 records, representing all of the works that have been accessioned into MoMA’s collection and cataloged in our database. [MoMA]
 
 Given the nature of the data, **we aim to predict if an alive artist will entered an artwork during the next year**. This ML problem will be assessed using bash, SQL and Python to download, clean and process the [MoMA] database. It is worth mentioning that the scope of the project does not include the estimation of the ML algorithms to solve the above mentioned problem and will only cover up to the creation of features. The following sections will explain in more detail each step of the workflow and our lines of thought.
 
@@ -112,7 +112,7 @@ chmod +x ./sh/pipeline.sh
 ./sh/pipeline.sh
 ```
 
-After completing these steps, you can enter to Postgresql and confirm all the schemas and tables where created using this commands:
+After completing these steps, you can enter to Postgresql and confirm all the schemas and tables were created using this commands:
 ```text
 psql -h 0.0.0.0 -U moma -d moma -W
 ```
